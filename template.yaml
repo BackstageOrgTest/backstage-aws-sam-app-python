@@ -68,11 +68,13 @@ spec:
   steps:
     - id: template
       name: Fetch Skeleton + Template
-      action: fetch:cookiecutter
+    # action: fetch:cookiecutter
+      action: fetch:template
       input:        
         url: ./skeleton
         copyWithoutRender:
           - .github/workflows/*
+        cookiecutterCompat: true
         values:
           component_id: '{{ parameters.component_id }}'          
           include_safe_deployment: '{{ parameters.include_safe_deployment }}'
