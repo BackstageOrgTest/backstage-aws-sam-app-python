@@ -6,21 +6,21 @@ metadata:
   description: Creates a new AWS SAM Python application
   tags:
     - recommended
-    - python    
+    - python
 spec:
-  owner: harrajag@amazon.com
+  owner: ricmartinez@deloitte.com
   type: service
-  
+
   parameters:
     - title: Provide some simple information
       required:
-        - component_id        
-        - region             
+        - component_id
+        - region
       properties:
         component_id:
           title: Name
           type: string
-          description: Unique name of the component        
+          description: Unique name of the component
         description:
           title: Description
           type: string
@@ -32,7 +32,7 @@ spec:
         region:
           title: AWS region
           type: string
-          description: AWS region in which the stack will be deployed  
+          description: AWS region in which the stack will be deployed
           enum:
             - us-east-1
             - us-east-2
@@ -52,12 +52,12 @@ spec:
           description: Owner of the component
           ui:field: OwnerPicker
           ui:options:
-            allowedKinds: 
-              - Group    
-    - title: Choose a location  
+            allowedKinds:
+              - Group
+    - title: Choose a location
       required:
         - repoUrl
-      properties: 
+      properties:
         repoUrl:
           title: Repository Location
           type: string
@@ -70,19 +70,19 @@ spec:
       name: Fetch Skeleton + Template
     # action: fetch:cookiecutter
       action: fetch:template
-      input:        
+      input:
         url: ./skeleton
         copyWithoutRender:
           - .github/workflows/*
         cookiecutterCompat: true
         values:
-          component_id: '{{ parameters.component_id }}'          
+          component_id: '{{ parameters.component_id }}'
           include_safe_deployment: '{{ parameters.include_safe_deployment }}'
           region: '{{ parameters.region }}'
           description: '{{ parameters.description }}'
           owner: '{{ parameters.owner }}'
           destination: '{{ parseRepoUrl parameters.repoUrl }}'
-   
+
     - id: publish
       name: Publish
       action: publish:github
@@ -93,7 +93,7 @@ spec:
 
     - id: register
       name: Register
-      action: catalog:register 
+      action: catalog:register
       input:
         repoContentsUrl: '{{ steps.publish.output.repoContentsUrl }}'
         catalogInfoPath: '/catalog-info.yaml'
